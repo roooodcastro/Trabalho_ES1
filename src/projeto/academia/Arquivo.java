@@ -4,6 +4,7 @@
  */
 package projeto.academia;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
@@ -79,5 +80,17 @@ public class Arquivo {
 
     public FileWriter getArquivoOut() {
         return out;
+    }
+
+    public static void criarBackup(String nomeArquivo) {
+        try {
+            File arquivo = new File(nomeArquivo);
+            arquivo.renameTo(new File(nomeArquivo + ".bkp"));
+            arquivo = new File(nomeArquivo);
+            arquivo.delete();
+            arquivo.createNewFile();
+        } catch (Exception ex) {
+            new File(nomeArquivo + ".bkp").renameTo(new File(nomeArquivo));
+        }
     }
 }

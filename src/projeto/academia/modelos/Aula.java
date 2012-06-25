@@ -103,4 +103,9 @@ public class Aula extends ModeloAbstrato {
     public boolean alterar() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public String[] getTableRow() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

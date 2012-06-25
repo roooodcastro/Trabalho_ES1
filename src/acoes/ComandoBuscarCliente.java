@@ -4,6 +4,9 @@
  */
 package acoes;
 
+import projeto.academia.ui.TelaBuscarClientes;
+import projeto.academia.ui.TelaPrincipal;
+
 /**
  *
  * @author Rodrigo
@@ -12,7 +15,7 @@ public class ComandoBuscarCliente extends Comando {
 
     @Override
     public void executarComando() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        new TelaBuscarClientes(TelaPrincipal.getInstance(), true).setVisible(true);
     }
     
 }

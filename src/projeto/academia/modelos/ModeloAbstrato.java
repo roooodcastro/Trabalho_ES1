@@ -19,4 +19,6 @@ public abstract class ModeloAbstrato {
 
     public abstract boolean alterar();
 
+    public abstract String[] getTableRow();
+
 }

@@ -18,6 +18,18 @@ import projeto.academia.Arquivo;
 public class Cliente extends Pessoa {
 
     private static List<Cliente> clientes;
+
+    public static List<Cliente> buscar(String busca) {
+        recarregarClientes();
+        busca = busca.trim();
+        List<Cliente> clientesAchados = new ArrayList<Cliente>();
+        for (Cliente cliente : clientes) {
+            if (cliente.getCpf().contains(busca) || cliente.getNome().contains(busca)) {
+                clientesAchados.add(cliente);
+            }
+        }
+        return clientesAchados;
+    }
     private List<Aula> aulas;
     private Pacote pacote;
 
@@ -56,7 +68,21 @@ public class Cliente extends Pessoa {
 
     @Override
     public boolean alterar() {
-        return false;
+        recarregarClientes();
+        try {
+            Arquivo.criarBackup(Arquivo.ARQ_CLIENTE);
+            Arquivo arquivoCliente = new Arquivo(Arquivo.ARQ_CLIENTE, Arquivo.MODO_ESCRITA);
+            for (Cliente cliente : clientes) {
+                if (cliente.getCpf().equals(cpf)) {
+                    cliente = this;
+                }
+                arquivoCliente.escreverRegistro(cliente.gerarRegistroArquivo());
+            }
+            arquivoCliente.escreverRegistro(gerarRegistroArquivo());
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override
@@ -121,5 +147,18 @@ public class Cliente extends Pessoa {
             clientes.add(cliente);
             registro = arquivoClientes.lerRegistro();
         }
+    }
+
+    @Override
+    public String[] getTableRow() {
+        return new String[]{cpf, nome, dataNasc};
+    }
+
+    public static String[][] getTableData(List<Cliente> listaClientes) {
+        String[][] data = new String[listaClientes.size()][];
+        for (int i = 0 ; i < listaClientes.size(); i++) {
+            data[i] = listaClientes.get(i).getTableRow();
+        }
+        return data;
     }
 }

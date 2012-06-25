@@ -19,6 +19,13 @@ public class TelaEditarCliente extends javax.swing.JDialog {
         super(parent, modal);
         this.cliente = cliente;
         initComponents();
+        txtNome.setText(cliente.getNome());
+        txtCpf.setText(cliente.getCpf());
+        txtTelefone.setText(cliente.getTelefone());
+        txtEmail.setText(cliente.getEmail());
+        txtEndereco.setText(cliente.getEndereco());
+        txtDataNascimento.setText(cliente.getDataNasc());
+        txtRg.setText(cliente.getRg());
     }
 
     /** This method is called from within the constructor to
@@ -146,7 +153,7 @@ public class TelaEditarCliente extends javax.swing.JDialog {
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 268, Short.MAX_VALUE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -186,7 +193,7 @@ public class TelaEditarCliente extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
         jLabel1.setText("Editar cliente");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -226,6 +233,7 @@ public class TelaEditarCliente extends javax.swing.JDialog {
                 cliente.setEmail(txtEmail.getText());
                 cliente.alterar();
                 InterfaceUtils.exibeMensagem(this, "Cliente alterado", "Cliente editado com sucesso!");
+                dispose();
             } catch (Exception ex) {
                 InterfaceUtils.exibeAlerta(this, "Erro ao salvar", "Houve um erro ao salvar o Cliente. Por favor tente novamente.");
             }

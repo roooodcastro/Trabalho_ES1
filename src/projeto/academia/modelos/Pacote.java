@@ -39,4 +39,9 @@ public class Pacote extends ModeloAbstrato {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String[] getTableRow() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
