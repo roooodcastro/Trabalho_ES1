@@ -4,6 +4,9 @@
  */
 package acoes;
 
+import projeto.academia.ui.TelaBuscarProfessores;
+import projeto.academia.ui.TelaPrincipal;
+
 /**
  *
  * @author Rodrigo
@@ -12,7 +15,7 @@ public class ComandoBuscarProfessor extends Comando {
 
     @Override
     public void executarComando() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        new TelaBuscarProfessores(TelaPrincipal.getInstance(), true).setVisible(true);
     }
     
 }

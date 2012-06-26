@@ -18,6 +18,8 @@ import projeto.academia.Arquivo;
 public class Cliente extends Pessoa {
 
     private static List<Cliente> clientes;
+    private List<Aula> aulas;
+    private Pacote pacote;
 
     public static List<Cliente> buscar(String busca) {
         recarregarClientes();
@@ -30,8 +32,23 @@ public class Cliente extends Pessoa {
         }
         return clientesAchados;
     }
-    private List<Aula> aulas;
-    private Pacote pacote;
+
+    public static boolean excluir(Cliente cli) {
+        recarregarClientes();
+        try {
+            Arquivo arquivoCliente = new Arquivo(Arquivo.ARQ_CLIENTE, Arquivo.MODO_ESCRITA);
+            arquivoCliente.limpar();
+            for (Cliente cliente : clientes) {
+                if (!cliente.getCpf().equals(cli.getCpf())) {
+                    arquivoCliente.escreverRegistro(cliente.gerarRegistroArquivo());
+                }
+            }
+            recarregarClientes();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 
     public static void cadastrarCliente(String nome, String cpf, String rg, String telefone,
             String dataNascimento, String endereco, String email) {
@@ -70,15 +87,15 @@ public class Cliente extends Pessoa {
     public boolean alterar() {
         recarregarClientes();
         try {
-            Arquivo.criarBackup(Arquivo.ARQ_CLIENTE);
             Arquivo arquivoCliente = new Arquivo(Arquivo.ARQ_CLIENTE, Arquivo.MODO_ESCRITA);
+            arquivoCliente.limpar();
             for (Cliente cliente : clientes) {
                 if (cliente.getCpf().equals(cpf)) {
                     cliente = this;
                 }
                 arquivoCliente.escreverRegistro(cliente.gerarRegistroArquivo());
             }
-            arquivoCliente.escreverRegistro(gerarRegistroArquivo());
+            recarregarClientes();
             return true;
         } catch (Exception ex) {
             return false;
@@ -111,12 +128,6 @@ public class Cliente extends Pessoa {
         else
             registro += " ";
         return registro;
-    }
-
-    private String gerarCampoRegistro(String campo) {
-        if (campo == null || campo.isEmpty())
-            campo = " ";
-        return campo + Arquivo.SEPARADOR_PADRAO;
     }
 
     public List<Aula> getAulas() {
@@ -156,7 +167,7 @@ public class Cliente extends Pessoa {
 
     public static String[][] getTableData(List<Cliente> listaClientes) {
         String[][] data = new String[listaClientes.size()][];
-        for (int i = 0 ; i < listaClientes.size(); i++) {
+        for (int i = 0; i < listaClientes.size(); i++) {
             data[i] = listaClientes.get(i).getTableRow();
         }
         return data;

@@ -7,6 +7,7 @@ package projeto.academia;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,13 +38,37 @@ public class Arquivo {
     public static final String SEPARADOR_PADRAO = ";";
     private FileWriter out = null;
     private FileReader in = null;
+    private int modo = -1;
+    private String nomeArquivo = null;
 
     public Arquivo(String nomeArquivo, int modo) {
+        this.modo = modo;
+        this.nomeArquivo = nomeArquivo;
+        abrirArquivo(true);
+    }
+
+    private void abrirArquivo(boolean preservar) {
         try {
+            File f = new File(nomeArquivo);
+            if (!f.exists()) {
+                f.createNewFile();
+            }
             if (modo == MODO_LEITURA) {
                 in = new FileReader(nomeArquivo);
             } else {
-                out = new FileWriter(nomeArquivo, true);
+                out = new FileWriter(nomeArquivo, preservar);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void fecharArquivo() {
+        try {
+            if (modo == MODO_LEITURA) {
+                in.close();
+            } else {
+                out.close();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -82,15 +107,12 @@ public class Arquivo {
         return out;
     }
 
-    public static void criarBackup(String nomeArquivo) {
+    public void limpar() {
         try {
-            File arquivo = new File(nomeArquivo);
-            arquivo.renameTo(new File(nomeArquivo + ".bkp"));
-            arquivo = new File(nomeArquivo);
-            arquivo.delete();
-            arquivo.createNewFile();
+            fecharArquivo();
+            abrirArquivo(false);
         } catch (Exception ex) {
-            new File(nomeArquivo + ".bkp").renameTo(new File(nomeArquivo));
+            JOptionPane.showInputDialog("erro");
         }
     }
 }

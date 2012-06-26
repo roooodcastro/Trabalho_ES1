@@ -5,6 +5,7 @@
 package projeto.academia;
 
 import javax.swing.UIManager;
+import projeto.academia.ui.TelaLogin;
 import projeto.academia.ui.TelaPrincipal;
 
 /**
@@ -23,6 +24,7 @@ public class ProjetoAcademia {
             @Override
             public void run() {
                 TelaPrincipal.getInstance().setVisible(true);
+//                new TelaLogin(null, true).setVisible(true);
             }
         });
     }

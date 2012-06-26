@@ -20,6 +20,8 @@ import projeto.academia.Horario;
 public class Aula extends ModeloAbstrato {
 
     private static List<Aula> aulas;
+    private int id;
+    private String nome;
     private Professor professor;
     private List<Cliente> alunos;
     private List<Horario> horarios;
@@ -34,12 +36,13 @@ public class Aula extends ModeloAbstrato {
     @Override
     public void lerDoArquivo(String registro) {
         String[] campos = registro.split(Arquivo.SEPARADOR_PADRAO);
-
+        
     }
 
     @Override
     public String gerarRegistroArquivo() {
         String registro = professor.getCpf();
+        registro += gerarCampoRegistro(nome);
         registro += Arquivo.SEPARADOR_PADRAO;
         registro += sala.getId() + Arquivo.SEPARADOR_PADRAO;
         for (Horario horario : horarios) {
@@ -55,6 +58,15 @@ public class Aula extends ModeloAbstrato {
 
     public static List<Aula> buscarAulas(String cpfProfessor, String nomeEspaco, Horario horario, String cpfAluno) {
         // Carregar todas as aulas e ver uma a uma se satisfaz todas as condições
+        return null;
+    }
+
+    public static Aula buscarPorId(int id) {
+        recarregarAulas();
+        for (Aula aula : aulas) {
+            if (aula.getId() == id)
+                return aula;
+        }
         return null;
     }
 
@@ -107,5 +119,33 @@ public class Aula extends ModeloAbstrato {
     @Override
     public String[] getTableRow() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private static void recarregarAulas() {
+        Arquivo arquivoAulas = new Arquivo(Arquivo.ARQ_AULA, Arquivo.MODO_LEITURA);
+        String registro = arquivoAulas.lerRegistro();
+        aulas = new ArrayList<Aula>();
+        while (registro != null && !registro.isEmpty()) {
+            Aula aula = new Aula();
+            aula.lerDoArquivo(registro);
+            aulas.add(aula);
+            registro = arquivoAulas.lerRegistro();
+        }
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

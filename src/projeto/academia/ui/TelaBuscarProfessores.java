@@ -2,36 +2,31 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-/*
- * TelaBuscarClientes.java
- *
- * Created on 25/06/2012, 11:12:04
- */
 package projeto.academia.ui;
 
-import acoes.ComandoExibirCliente;
+import acoes.ComandoExibirProfessor;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import projeto.academia.modelos.Cliente;
+import projeto.academia.modelos.Professor;
 
 /**
  *
- * @author rodcastro
+ * @author Rodrigo
  */
-public class TelaBuscarClientes extends javax.swing.JDialog {
+public class TelaBuscarProfessores extends javax.swing.JDialog {
 
-    List<Cliente> clientes;
-
-    /** Creates new form TelaBuscarClientes */
-    public TelaBuscarClientes(java.awt.Frame parent, boolean modal) {
+    private List<Professor> professores;
+    
+    /** Creates new form TelaBuscarProfessores */
+    public TelaBuscarProfessores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        clientes = Cliente.getClientes();
+        professores = Professor.getProfessores();
         recarregarTabela();
+        InterfaceUtils.centralizarFrame(this);
     }
 
     /** This method is called from within the constructor to
@@ -48,7 +43,7 @@ public class TelaBuscarClientes extends javax.swing.JDialog {
         txtBusca = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableClientes = new javax.swing.JTable();
+        tableProfessores = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -67,13 +62,13 @@ public class TelaBuscarClientes extends javax.swing.JDialog {
             }
         });
 
-        tableClientes.setPreferredSize(new java.awt.Dimension(600, 72));
-        tableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableProfessores.setPreferredSize(new java.awt.Dimension(600, 72));
+        tableProfessores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableClientesMouseClicked(evt);
+                tableProfessoresMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableClientes);
+        jScrollPane1.setViewportView(tableProfessores);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -82,7 +77,7 @@ public class TelaBuscarClientes extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -105,7 +100,7 @@ public class TelaBuscarClientes extends javax.swing.JDialog {
         );
 
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
-        jLabel1.setText("Buscar Clientes");
+        jLabel1.setText("Buscar Professores");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,45 +128,45 @@ public class TelaBuscarClientes extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-            clientes = Cliente.buscar(txtBusca.getText());
+            professores = Professor.buscar(txtBusca.getText());
             recarregarTabela();
-            if (clientes.size() == 1) {
-                new ComandoExibirCliente(clientes.get(0)).executarComando();
+            if (professores.size() == 1) {
+                new ComandoExibirProfessor(professores.get(0)).executarComando();
             }
         } catch (Exception ex) {
-            InterfaceUtils.exibeAlerta(this, "Erro ao salvar", "Houve um erro ao salvar o Cliente. Por favor tente novamente.");
+            InterfaceUtils.exibeAlerta(this, "Erro ao salvar", "Houve um erro ao realizar a busca. Por favor tente novamente.");
         }
-}//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void tableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClientesMouseClicked
+    private void tableProfessoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProfessoresMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
-            Cliente c = Cliente.buscar(tableClientes.getModel().getValueAt(tableClientes.getSelectedRow(), 0).toString()).get(0);
-            new ComandoExibirCliente(c).executarComando();
+            Professor professor = Professor.buscar(tableProfessores.getModel().getValueAt(tableProfessores.getSelectedRow(), 0).toString()).get(0);
+            new ComandoExibirProfessor(professor).executarComando();
         }
-    }//GEN-LAST:event_tableClientesMouseClicked
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableClientes;
-    private javax.swing.JTextField txtBusca;
-    // End of variables declaration//GEN-END:variables
+    }//GEN-LAST:event_tableProfessoresMouseClicked
 
     private void recarregarTabela() {
-        tableClientes.setRowHeight(30);
-        tableClientes.setPreferredSize(new Dimension(400, 325));
-        tableClientes.setModel(new DefaultTableModel(Cliente.getTableData(clientes), new String[]{"CPF", "Nome", "Data Nasc"}) {
+        tableProfessores.setRowHeight(30);
+        tableProfessores.setPreferredSize(new Dimension(400, 325));
+        tableProfessores.setModel(new DefaultTableModel(Professor.getTableData(professores), new String[]{"CPF", "Nome", "Ocupação"}) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         });
-        TableColumnModel colunas = tableClientes.getColumnModel();
+        TableColumnModel colunas = tableProfessores.getColumnModel();
         colunas.getColumn(0).setPreferredWidth(110);
-        colunas.getColumn(1).setPreferredWidth(310);
-        colunas.getColumn(2).setPreferredWidth(85);
+        colunas.getColumn(1).setPreferredWidth(240);
+        colunas.getColumn(2).setPreferredWidth(160);
     }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableProfessores;
+    private javax.swing.JTextField txtBusca;
+    // End of variables declaration//GEN-END:variables
 }

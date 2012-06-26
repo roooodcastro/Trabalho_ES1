@@ -4,6 +4,9 @@
  */
 package acoes;
 
+import projeto.academia.ui.TelaNovoFuncionario;
+import projeto.academia.ui.TelaPrincipal;
+
 /**
  *
  * @author Rodrigo
@@ -12,7 +15,7 @@ public class ComandoNovoProfessor extends Comando {
 
     @Override
     public void executarComando() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        new TelaNovoFuncionario(TelaPrincipal.getInstance(), true).setVisible(true);
     }
     
 }

@@ -32,6 +32,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         InterfaceUtils.centralizarFrame(this);
         btnNovoCliente.setAction(new ComandoNovoCliente());
         btnNovoCliente.setText("Novo Cliente");
+        btnBuscaCliente.setAction(new ComandoBuscarCliente());
+        btnBuscaCliente.setText("Buscar Cliente");
     }
 
     /** This method is called from within the constructor to
@@ -133,6 +135,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 //        menuCliente.add(criarItemMenu("Editar Cliente", new ComandoEditarCliente(Cliente.getClientes().get(0))));
         menuProfessor.add(criarItemMenu("Novo Professor", new ComandoNovoProfessor()));
         menuProfessor.add(criarItemMenu("Buscar Professor", new ComandoBuscarProfessor()));
+        menuAulas.add(criarItemMenu("Novo Espaço", new ComandoNovoEspaco()));
+        menuAulas.add(criarItemMenu("Listar Espaços", new ComandoListarEspacos()));
         menuBar.add(menuArquivo);
         menuBar.add(menuCliente);
         menuBar.add(menuProfessor);

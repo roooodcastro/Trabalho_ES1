@@ -4,10 +4,18 @@
  */
 package acoes;
 
+import projeto.academia.ui.TelaListarEspacos;
+import projeto.academia.ui.TelaPrincipal;
+
 /**
  *
  * @author Rodrigo
  */
-public class ComandoListarEspacos {
+public class ComandoListarEspacos extends Comando {
+
+    @Override
+    public void executarComando() {
+        new TelaListarEspacos(TelaPrincipal.getInstance(), true).setVisible(true);
+    }
     
 }

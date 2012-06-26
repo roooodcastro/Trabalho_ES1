@@ -4,6 +4,7 @@
  */
 package projeto.academia.modelos;
 
+import projeto.academia.Arquivo;
 
 /**
  *
@@ -21,4 +22,9 @@ public abstract class ModeloAbstrato {
 
     public abstract String[] getTableRow();
 
+    protected String gerarCampoRegistro(String campo) {
+        if (campo == null || campo.isEmpty())
+            campo = " ";
+        return campo + Arquivo.SEPARADOR_PADRAO;
+    }
 }
