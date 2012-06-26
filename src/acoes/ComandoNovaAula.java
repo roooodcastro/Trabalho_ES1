@@ -4,10 +4,18 @@
  */
 package acoes;
 
+import projeto.academia.ui.TelaNovaAula;
+import projeto.academia.ui.TelaPrincipal;
+
 /**
  *
  * @author Rodrigo
  */
-public class ComandoNovaAula {
+public class ComandoNovaAula extends Comando {
+
+    @Override
+    public void executarComando() {
+        new TelaNovaAula(TelaPrincipal.getInstance(), true).setVisible(true);
+    }
     
 }

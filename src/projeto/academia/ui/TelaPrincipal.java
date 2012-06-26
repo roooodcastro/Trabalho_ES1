@@ -8,6 +8,7 @@ import acoes.*;
 import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 import projeto.academia.modelos.Cliente;
 
 /**
@@ -137,6 +138,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuProfessor.add(criarItemMenu("Buscar Professor", new ComandoBuscarProfessor()));
         menuAulas.add(criarItemMenu("Novo Espaço", new ComandoNovoEspaco()));
         menuAulas.add(criarItemMenu("Listar Espaços", new ComandoListarEspacos()));
+        menuAulas.add(new JSeparator());
+        menuAulas.add(criarItemMenu("Nova Aula", new ComandoNovaAula()));
         menuBar.add(menuArquivo);
         menuBar.add(menuCliente);
         menuBar.add(menuProfessor);

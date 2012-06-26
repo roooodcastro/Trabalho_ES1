@@ -27,6 +27,11 @@ public class Aula extends ModeloAbstrato {
     private List<Horario> horarios;
     private Espaco sala;
 
+    public Aula() {
+        alunos = new ArrayList<Cliente>();
+        horarios = new ArrayList<Horario>();
+    }
+    
     public static List<Aula> getAulas() {
         if (aulas == null)
             carregarAulas();
@@ -36,14 +41,29 @@ public class Aula extends ModeloAbstrato {
     @Override
     public void lerDoArquivo(String registro) {
         String[] campos = registro.split(Arquivo.SEPARADOR_PADRAO);
-        
+        String cpfProfesor = campos[0].trim();
+        if (!cpfProfesor.isEmpty())
+            professor = Professor.buscar(campos[0].trim()).get(0);
+        nome = campos[1].trim();
+        sala = Espaco.getPorId(Integer.parseInt(campos[2].trim()));
+        String horariosString = campos[3].trim();
+        horarios = new ArrayList<Horario>();
+        for (String horario : horariosString.split(",")) {
+            horarios.add(Horario.getFromString(horario));
+        }
+        alunos = new ArrayList<Cliente>();
+        for (int i = 4; i < campos.length; i++) {
+            String cpf = campos[i].trim();
+            if (!cpf.isEmpty())
+                alunos.add(Cliente.buscar(campos[i].trim()).get(0));
+        }
     }
 
     @Override
     public String gerarRegistroArquivo() {
         String registro = professor.getCpf();
-        registro += gerarCampoRegistro(nome);
         registro += Arquivo.SEPARADOR_PADRAO;
+        registro += gerarCampoRegistro(nome);
         registro += sala.getId() + Arquivo.SEPARADOR_PADRAO;
         for (Horario horario : horarios) {
             registro += horario.toString() + ",";
@@ -106,9 +126,27 @@ public class Aula extends ModeloAbstrato {
         this.sala = sala;
     }
 
+    public static void cadastrarAula(String nome, Professor professor, List<Horario> horarios, Espaco espaco) {
+        Aula novaAula = new Aula();
+        novaAula.setProfessor(professor);
+        novaAula.setNome(nome);
+        novaAula.setSala(espaco);
+        novaAula.setHorarios(horarios);
+        novaAula.incluir();
+    }
+
     @Override
     public boolean incluir() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            recarregarAulas();
+            Arquivo arquivoAula = new Arquivo(Arquivo.ARQ_AULA, Arquivo.MODO_ESCRITA);
+            id = gerarProximoId();
+            arquivoAula.escreverRegistro(gerarRegistroArquivo());
+            recarregarAulas();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override
@@ -118,7 +156,15 @@ public class Aula extends ModeloAbstrato {
 
     @Override
     public String[] getTableRow() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new String[] {id + "", nome};
+    }
+    
+    public static String[][] getTableData(List<Aula> listaAulas) {
+        String[][] data = new String[listaAulas.size()][];
+        for (int i = 0; i < listaAulas.size(); i++) {
+            data[i] = listaAulas.get(i).getTableRow();
+        }
+        return data;
     }
 
     public int getId() {
@@ -147,5 +193,26 @@ public class Aula extends ModeloAbstrato {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<Horario> horarios) {
+        this.horarios = horarios;
+    }
+
+    public void setAlunos(List<Cliente> alunos) {
+        this.alunos = alunos;
+    }
+    
+    private static int gerarProximoId() {
+        recarregarAulas();
+        int maiorId = 0;
+        for (Aula aula : aulas) {
+            maiorId = Math.max(maiorId, aula.getId());
+        }
+        return ++maiorId;
     }
 }
