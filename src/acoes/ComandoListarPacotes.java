@@ -4,10 +4,17 @@
  */
 package acoes;
 
+import projeto.academia.ui.TelaPrincipal;
+
 /**
  *
  * @author Rodrigo
  */
-public class ComandoListarPacotes {
+public class ComandoListarPacotes extends Comando {
+
+    @Override
+    public void executarComando() {
+//        new TelaListarPacotes(TelaPrincipal.getInstance(), true).setVisible(true);
+    }
     
 }

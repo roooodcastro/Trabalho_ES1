@@ -4,7 +4,10 @@
  */
 package acoes;
 
+import projeto.academia.modelos.Aula;
 import projeto.academia.modelos.Cliente;
+import projeto.academia.ui.TelaIncluiAulaCliente;
+import projeto.academia.ui.TelaPrincipal;
 
 /**
  *
@@ -13,14 +16,16 @@ import projeto.academia.modelos.Cliente;
 public class ComandoIncluiClienteAula extends Comando {
 
     private Cliente cliente;
+    private Aula aula;
     
-    public ComandoIncluiClienteAula(Cliente cliente) {
+    public ComandoIncluiClienteAula(Cliente cliente, Aula aula) {
         this.cliente = cliente;
+        this.aula = aula;
     }
     
     @Override
     public void executarComando() {
-//        new Tela
+        new TelaIncluiAulaCliente(TelaPrincipal.getInstance(), true, cliente, aula).setVisible(true);
     }
     
 }

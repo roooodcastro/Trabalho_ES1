@@ -81,7 +81,7 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboEspaco" max="32767" attributes="0"/>
+                              <Component id="comboEspacos" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -103,7 +103,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="comboEspaco" max="32767" attributes="0"/>
+                      <Component id="comboEspacos" max="32767" attributes="0"/>
                       <Component id="txtNome" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -173,7 +173,7 @@
             <Property name="text" type="java.lang.String" value="Professor"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="comboEspaco">
+        <Component class="javax.swing.JComboBox" name="comboEspacos">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>

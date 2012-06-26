@@ -5,10 +5,7 @@
 package projeto.academia.ui;
 
 import acoes.*;
-import javax.swing.Action;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
+import javax.swing.*;
 import projeto.academia.modelos.Cliente;
 
 /**
@@ -31,10 +28,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         construirBarraMenu();
         setTitle("Gerenciador de Academia");
         InterfaceUtils.centralizarFrame(this);
-        btnNovoCliente.setAction(new ComandoNovoCliente());
-        btnNovoCliente.setText("Novo Cliente");
-        btnBuscaCliente.setAction(new ComandoBuscarCliente());
-        btnBuscaCliente.setText("Buscar Cliente");
+        setupBotao(btnNovoCliente, "Cadastrar Cliente", new ComandoNovoCliente());
+        setupBotao(btnNovoProfessor, "Cadastrar Professor", new ComandoNovoProfessor());
+        setupBotao(btnNovaAula, "Cadastrar Aula", new ComandoNovaAula());
+        setupBotao(btnNovoEspaco, "Cadastrar Espaço", new ComandoNovoEspaco());
+        setupBotao(btnNovoPacote, "Cadastrar Pacote", new ComandoNovoPacote());
+        setupBotao(btnBuscaClientes, "Buscar Clientes", new ComandoBuscarCliente());
+        setupBotao(btnBuscaProfessor, "Buscar Professores", new ComandoBuscarProfessor());
+        setupBotao(btnBuscaAulas, "Buscar Aulas", new ComandoBuscarAula());
+        setupBotao(btnBuscaEspacos, "Listar Espaços", new ComandoListarEspacos());
+//        setupBotao(btnBuscaClientes, "Buscar Pacote", new ComandoListarPacotes());
+        
     }
 
     /** This method is called from within the constructor to
@@ -48,9 +52,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         pnAcoes = new javax.swing.JPanel();
         btnNovoCliente = new javax.swing.JButton();
-        btnBuscaCliente = new javax.swing.JButton();
+        btnNovaAula = new javax.swing.JButton();
         btnNovoProfessor = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnNovoEspaco = new javax.swing.JButton();
+        btnNovoPacote = new javax.swing.JButton();
+        pnAcoes1 = new javax.swing.JPanel();
+        btnBuscaClientes = new javax.swing.JButton();
+        btnBuscaAulas = new javax.swing.JButton();
+        btnBuscaProfessor = new javax.swing.JButton();
+        btnBuscaEspacos = new javax.swing.JButton();
+        btnBuscaPacotes = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -60,15 +71,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnNovoCliente.setLabel("Novo Cliente");
         btnNovoCliente.setPreferredSize(new java.awt.Dimension(100, 100));
 
-        btnBuscaCliente.setLabel("Buscar Cliente");
-        btnBuscaCliente.setPreferredSize(new java.awt.Dimension(100, 100));
+        btnNovaAula.setText("Cadastrar Aula");
+        btnNovaAula.setPreferredSize(new java.awt.Dimension(100, 100));
+        btnNovaAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovaAulaActionPerformed(evt);
+            }
+        });
 
         btnNovoProfessor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnNovoProfessor.setLabel("Novo Professor");
         btnNovoProfessor.setPreferredSize(new java.awt.Dimension(100, 100));
 
-        jButton5.setLabel("Buscar Professor");
-        jButton5.setPreferredSize(new java.awt.Dimension(100, 100));
+        btnNovoEspaco.setText("Cadastrar Espaço");
+        btnNovoEspaco.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        btnNovoPacote.setText("Cadastrar Pacote");
+        btnNovoPacote.setPreferredSize(new java.awt.Dimension(100, 100));
 
         javax.swing.GroupLayout pnAcoesLayout = new javax.swing.GroupLayout(pnAcoes);
         pnAcoes.setLayout(pnAcoesLayout);
@@ -76,24 +95,83 @@ public class TelaPrincipal extends javax.swing.JFrame {
             pnAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnAcoesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnNovoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNovoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNovaAula, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNovoProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNovoProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(389, Short.MAX_VALUE))
+                .addComponent(btnNovoEspaco, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNovoPacote, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnAcoesLayout.setVerticalGroup(
             pnAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnAcoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNovoEspaco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNovoPacote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNovaAula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovoProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnAcoes1.setPreferredSize(new java.awt.Dimension(819, 120));
+
+        btnBuscaClientes.setText("Buscar Clientes");
+        btnBuscaClientes.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        btnBuscaAulas.setText("Buscar Aulas");
+        btnBuscaAulas.setPreferredSize(new java.awt.Dimension(100, 100));
+        btnBuscaAulas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaAulasActionPerformed(evt);
+            }
+        });
+
+        btnBuscaProfessor.setText("Buscar Professor");
+        btnBuscaProfessor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBuscaProfessor.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        btnBuscaEspacos.setText("Listar Espaço");
+        btnBuscaEspacos.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        btnBuscaPacotes.setText("Listar Pacotes");
+        btnBuscaPacotes.setEnabled(false);
+        btnBuscaPacotes.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        javax.swing.GroupLayout pnAcoes1Layout = new javax.swing.GroupLayout(pnAcoes1);
+        pnAcoes1.setLayout(pnAcoes1Layout);
+        pnAcoes1Layout.setHorizontalGroup(
+            pnAcoes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAcoes1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnBuscaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscaAulas, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscaProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscaEspacos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscaPacotes, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnAcoes1Layout.setVerticalGroup(
+            pnAcoes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAcoes1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnAcoes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnAcoes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBuscaEspacos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscaPacotes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscaAulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscaProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -103,25 +181,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnAcoes, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+            .addComponent(pnAcoes1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnAcoes, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 330, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE)
+                .addComponent(pnAcoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnAcoes1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNovaAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaAulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNovaAulaActionPerformed
+
+    private void btnBuscaAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaAulasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscaAulasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscaCliente;
+    private javax.swing.JButton btnBuscaAulas;
+    private javax.swing.JButton btnBuscaClientes;
+    private javax.swing.JButton btnBuscaEspacos;
+    private javax.swing.JButton btnBuscaPacotes;
+    private javax.swing.JButton btnBuscaProfessor;
+    private javax.swing.JButton btnNovaAula;
     private javax.swing.JButton btnNovoCliente;
+    private javax.swing.JButton btnNovoEspaco;
+    private javax.swing.JButton btnNovoPacote;
     private javax.swing.JButton btnNovoProfessor;
-    private javax.swing.JButton jButton5;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JPanel pnAcoes;
+    private javax.swing.JPanel pnAcoes1;
     // End of variables declaration//GEN-END:variables
 
     private void construirBarraMenu() {
@@ -140,6 +237,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuAulas.add(criarItemMenu("Listar Espaços", new ComandoListarEspacos()));
         menuAulas.add(new JSeparator());
         menuAulas.add(criarItemMenu("Nova Aula", new ComandoNovaAula()));
+        menuAulas.add(criarItemMenu("Buscar Aulas", new ComandoBuscarAula()));
+        menuAulas.add(new JSeparator());
+        menuAulas.add(criarItemMenu("Novo Pacote", new ComandoNovoPacote()));
+        menuSobre.add(criarItemMenu("Sobre", new ComandoSobre()));
         menuBar.add(menuArquivo);
         menuBar.add(menuCliente);
         menuBar.add(menuProfessor);
@@ -151,5 +252,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         JMenuItem item = new JMenuItem(acao);
         item.setText(titulo);
         return item;
+    }
+    
+    private void setupBotao(JButton botao, String titulo, Action acao) {
+        botao.setAction(acao);
+        botao.setText(titulo);
     }
 }

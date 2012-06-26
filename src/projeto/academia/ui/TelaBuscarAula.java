@@ -4,7 +4,9 @@
  */
 package projeto.academia.ui;
 
+import acoes.ComandoExibirAula;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -22,7 +24,7 @@ public class TelaBuscarAula extends javax.swing.JDialog {
     private List<Aula> aulas;
     private List<Professor> professores;
     private List<Espaco> espacos;
-    
+
     /** Creates new form TelaBuscarAula */
     public TelaBuscarAula(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -32,9 +34,11 @@ public class TelaBuscarAula extends javax.swing.JDialog {
         recarregarTabela();
         espacos = Espaco.getEspacos();
         professores = Professor.getProfessores();
+        comboEspacos.addItem("-- Escolha --");
         for (Espaco espaco : espacos) {
             comboEspacos.addItem(espaco.getNome());
         }
+        comboProfessor.addItem("-- Escolha --");
         for (Professor professor : professores) {
             comboProfessor.addItem(professor.getNome());
         }
@@ -56,7 +60,7 @@ public class TelaBuscarAula extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableAulas = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        comboEspaco = new javax.swing.JComboBox();
+        comboEspacos = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         comboProfessor = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
@@ -112,7 +116,7 @@ public class TelaBuscarAula extends javax.swing.JDialog {
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboEspaco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboEspacos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
@@ -127,7 +131,7 @@ public class TelaBuscarAula extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboEspaco)
+                    .addComponent(comboEspacos)
                     .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -172,69 +176,25 @@ public class TelaBuscarAula extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-            aulas = Aula.buscar(txtNome.getText());
+            aulas = Aula.buscarAulas(txtNome.getText(), getProfessorSelecionado(), getEspacoSelecionado());
             recarregarTabela();
-            if (clientes.size() == 1) {
-                new ComandoExibirCliente(clientes.get(0)).executarComando();
+            if (aulas.size() == 1) {
+                new ComandoExibirAula(aulas.get(0)).executarComando();
             }
         } catch (Exception ex) {
-            InterfaceUtils.exibeAlerta(this, "Erro ao salvar", "Houve um erro ao salvar o Cliente. Por favor tente novamente.");
+            InterfaceUtils.exibeAlerta(this, "Erro ao buscar", "Houve um erro ao buscar a aula. Por favor tente novamente.");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tableAulasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAulasMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
-            Cliente c = Cliente.buscar(tableAulas.getModel().getValueAt(tableAulas.getSelectedRow(), 0).toString()).get(0);
-            new ComandoExibirCliente(c).executarComando();
+            Aula aula = Aula.buscarPorId(Integer.parseInt(tableAulas.getModel().getValueAt(tableAulas.getSelectedRow(), 0).toString()));
+            new ComandoExibirAula(aula).executarComando();
         }
     }//GEN-LAST:event_tableAulasMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscarAula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscarAula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscarAula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscarAula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                TelaBuscarAula dialog = new TelaBuscarAula(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JComboBox comboEspaco;
+    private javax.swing.JComboBox comboEspacos;
     private javax.swing.JComboBox comboProfessor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -246,7 +206,7 @@ public class TelaBuscarAula extends javax.swing.JDialog {
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 
-private void recarregarTabela() {
+    private void recarregarTabela() {
         tableAulas.setRowHeight(30);
         tableAulas.setPreferredSize(new Dimension(400, 325));
         tableAulas.setModel(new DefaultTableModel(Aula.getTableData(aulas), new String[]{"Código", "Nome"}) {
@@ -259,5 +219,19 @@ private void recarregarTabela() {
         TableColumnModel colunas = tableAulas.getColumnModel();
         colunas.getColumn(0).setPreferredWidth(100);
         colunas.getColumn(1).setPreferredWidth(500);
+    }
+
+    private Professor getProfessorSelecionado() {
+        if (comboProfessor.getSelectedIndex() > 0)
+            return professores.get(comboProfessor.getSelectedIndex() - 1);
+        else
+            return null;
+    }
+    
+    private Espaco getEspacoSelecionado() {
+        if (comboEspacos.getSelectedIndex() > 0)
+            return espacos.get(comboEspacos.getSelectedIndex() - 1);
+        else
+            return null;
     }
 }

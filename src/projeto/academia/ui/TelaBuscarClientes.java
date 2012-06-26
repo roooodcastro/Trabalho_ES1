@@ -32,6 +32,7 @@ public class TelaBuscarClientes extends javax.swing.JDialog {
         initComponents();
         clientes = Cliente.getClientes();
         recarregarTabela();
+        InterfaceUtils.centralizarFrame(this);
     }
 
     /** This method is called from within the constructor to

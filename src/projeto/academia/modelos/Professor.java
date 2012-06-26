@@ -20,7 +20,6 @@ public class Professor extends Pessoa {
     private List<Aula> aulas;
 
     public Professor() {
-        aulas = new ArrayList<Aula>();
     }
 
     @Override
@@ -35,11 +34,12 @@ public class Professor extends Pessoa {
         this.email = campos[6].trim();
         this.salario = campos[7].trim();
         this.ocupacao = campos[8].trim();
-        aulas = new ArrayList<Aula>();
-        for (int i = 9; i < campos.length; i++) {
-            String id = campos[i].trim();
-            if (!id.isEmpty())
-                aulas.add(Aula.buscarPorId(Integer.parseInt(id)));
+        this.aulas = new ArrayList<Aula>();
+        List<Aula> todasAulas = Aula.getAulas();
+        for (Aula aula : todasAulas) {
+            if (aula.getProfessor().getCpf().equals(this.cpf)) {
+                aulas.add(aula);
+            }
         }
     }
 
@@ -54,9 +54,6 @@ public class Professor extends Pessoa {
         registro += gerarCampoRegistro(email);
         registro += gerarCampoRegistro(salario);
         registro += gerarCampoRegistro(ocupacao);
-        for (Aula aula : aulas) {
-            registro += aula.getId() + Arquivo.SEPARADOR_PADRAO;
-        }
         return registro;
     }
 
@@ -188,5 +185,9 @@ public class Professor extends Pessoa {
 
     public void setSalario(String salario) {
         this.salario = salario;
+    }
+
+    public List<Aula> getAulas() {
+        return aulas;
     }
 }

@@ -112,6 +112,13 @@ public class Cliente extends Pessoa {
         this.rg = campos[4].trim();
         this.telefone = campos[5].trim();
         this.email = campos[6].trim();
+        this.aulas = new ArrayList<Aula>();
+        List<Aula> todasAulas = Aula.getAulas();
+        for (Aula aula : todasAulas) {
+            if (aula.isAlunoMatriculado(this)) {
+                aulas.add(aula);
+            }
+        }
     }
 
     @Override

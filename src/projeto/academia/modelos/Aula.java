@@ -31,7 +31,7 @@ public class Aula extends ModeloAbstrato {
         alunos = new ArrayList<Cliente>();
         horarios = new ArrayList<Horario>();
     }
-    
+
     public static List<Aula> getAulas() {
         if (aulas == null)
             carregarAulas();
@@ -76,9 +76,19 @@ public class Aula extends ModeloAbstrato {
         return registro.substring(0, registro.length() - 1);
     }
 
-    public static List<Aula> buscarAulas(String cpfProfessor, String nomeEspaco, Horario horario, String cpfAluno) {
-        // Carregar todas as aulas e ver uma a uma se satisfaz todas as condições
-        return null;
+    public static List<Aula> buscarAulas(String nome, Professor professor, Espaco espaco) {
+        recarregarAulas();
+        nome = nome.trim();
+        List<Aula> aulasAchadas = new ArrayList<Aula>();
+        for (Aula aula : aulas) {
+            boolean achouPeloNome = nome.isEmpty() ? true : aula.getNome().contains(nome);
+            boolean achouPeloProfessor = professor != null ? aula.getProfessor().getCpf().equals(professor.getCpf()) : true;
+            boolean achouPeloEspaco = espaco != null ? aula.getSala().getId() == espaco.getId() : true;
+            if (achouPeloNome && achouPeloProfessor && achouPeloEspaco) {
+                aulasAchadas.add(aula);
+            }
+        }
+        return aulasAchadas;
     }
 
     public static Aula buscarPorId(int id) {
@@ -94,7 +104,7 @@ public class Aula extends ModeloAbstrato {
         Arquivo arquivoAulas = new Arquivo(Arquivo.ARQ_AULA, Arquivo.MODO_LEITURA);
         String registro = arquivoAulas.lerRegistro();
         aulas = new ArrayList<Aula>();
-        while (registro != null) {
+        while (registro != null && !registro.isEmpty()) {
             Aula aula = new Aula();
             aula.lerDoArquivo(registro);
             aulas.add(aula);
@@ -108,6 +118,15 @@ public class Aula extends ModeloAbstrato {
 
     public void addAluno(Cliente aluno) {
         this.alunos.add(aluno);
+    }
+    
+    public boolean isAlunoMatriculado(Cliente cliente) {
+        for (Cliente aluno : alunos) {
+            if (aluno.getCpf().equals(cliente.getCpf())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Professor getProfessor() {
@@ -151,14 +170,32 @@ public class Aula extends ModeloAbstrato {
 
     @Override
     public boolean alterar() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        recarregarAulas();
+        try {
+            Arquivo arquivoAulas = new Arquivo(Arquivo.ARQ_AULA, Arquivo.MODO_ESCRITA);
+            arquivoAulas.limpar();
+            for (Aula aula : aulas) {
+                if (aula.getId() == id) {
+                    aula = this;
+                }
+                arquivoAulas.escreverRegistro(aula.gerarRegistroArquivo());
+            }
+            recarregarAulas();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    public static boolean excluir(Aula aula) {
+        return false;
     }
 
     @Override
     public String[] getTableRow() {
-        return new String[] {id + "", nome};
+        return new String[]{id + "", nome};
     }
-    
+
     public static String[][] getTableData(List<Aula> listaAulas) {
         String[][] data = new String[listaAulas.size()][];
         for (int i = 0; i < listaAulas.size(); i++) {
@@ -206,7 +243,7 @@ public class Aula extends ModeloAbstrato {
     public void setAlunos(List<Cliente> alunos) {
         this.alunos = alunos;
     }
-    
+
     private static int gerarProximoId() {
         recarregarAulas();
         int maiorId = 0;

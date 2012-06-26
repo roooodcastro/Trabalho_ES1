@@ -7,7 +7,11 @@ package projeto.academia.ui;
 import acoes.ComandoEditarCliente;
 import acoes.ComandoExcluiCliente;
 import acoes.ComandoIncluiClienteAula;
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import projeto.academia.modelos.Aula;
 import projeto.academia.modelos.Cliente;
 
 /**
@@ -17,7 +21,7 @@ import projeto.academia.modelos.Cliente;
 public class TelaExibirCliente extends javax.swing.JDialog {
 
     private Cliente cliente;
-    
+
     /** Creates new form TelaExibirCliente */
     public TelaExibirCliente(java.awt.Frame parent, boolean modal, Cliente cliente) {
         super(parent, modal);
@@ -29,12 +33,14 @@ public class TelaExibirCliente extends javax.swing.JDialog {
         txtEndereco.setText(cliente.getEndereco());
         txtCPF.setText(cliente.getCpf());
         txtRG.setText(cliente.getRg());
-        btnIncluirAula.setAction(new ComandoIncluiClienteAula(cliente));
+        btnIncluirAula.setAction(new ComandoIncluiClienteAula(cliente, null));
         btnAlterar.setAction(new ComandoEditarCliente(cliente));
         btnExcluir.setAction(new ComandoExcluiCliente(cliente));
         btnIncluirAula.setText("Incluir Aula");
         btnAlterar.setText("Editar");
         btnExcluir.setText("Excluir");
+        InterfaceUtils.centralizarFrame(this);
+        recarregarTabela();
     }
 
     /** This method is called from within the constructor to
@@ -268,7 +274,6 @@ public class TelaExibirCliente extends javax.swing.JDialog {
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
@@ -291,4 +296,18 @@ public class TelaExibirCliente extends javax.swing.JDialog {
     private javax.swing.JLabel txtNome;
     private javax.swing.JLabel txtRG;
     // End of variables declaration//GEN-END:variables
+
+    private void recarregarTabela() {
+        tableAulas.setRowHeight(30);
+        tableAulas.setModel(new DefaultTableModel(Aula.getTableData(cliente.getAulas()), new String[]{"Código", "Nome"}) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        TableColumnModel colunas = tableAulas.getColumnModel();
+        colunas.getColumn(0).setPreferredWidth(100);
+        colunas.getColumn(1).setPreferredWidth(500);
+    }
 }
