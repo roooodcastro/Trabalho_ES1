@@ -34,8 +34,16 @@ public class Cliente extends Pessoa {
     }
 
     public static boolean excluir(Cliente cli) {
+
         recarregarClientes();
         try {
+            List<Aula> aulas = Aula.getAulas();
+            for (Aula aula : aulas) {
+                if (aula.isAlunoMatriculado(cli)) {
+                    aula.removeAluno(cli);
+                    aula.alterar();
+                }
+            }
             Arquivo arquivoCliente = new Arquivo(Arquivo.ARQ_CLIENTE, Arquivo.MODO_ESCRITA);
             arquivoCliente.limpar();
             for (Cliente cliente : clientes) {
@@ -77,6 +85,7 @@ public class Cliente extends Pessoa {
         try {
             Arquivo arquivoCliente = new Arquivo(Arquivo.ARQ_CLIENTE, Arquivo.MODO_ESCRITA);
             arquivoCliente.escreverRegistro(gerarRegistroArquivo());
+            recarregarClientes();
             return true;
         } catch (Exception ex) {
             return false;

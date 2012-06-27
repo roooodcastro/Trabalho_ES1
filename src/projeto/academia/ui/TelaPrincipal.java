@@ -4,7 +4,7 @@
  */
 package projeto.academia.ui;
 
-import acoes.*;
+import projeto.academia.acoes.*;
 import javax.swing.*;
 import projeto.academia.modelos.Cliente;
 

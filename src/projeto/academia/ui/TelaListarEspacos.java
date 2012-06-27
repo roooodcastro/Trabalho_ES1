@@ -4,10 +4,14 @@
  */
 package projeto.academia.ui;
 
-import acoes.ComandoExcluiEspaco;
+import projeto.academia.acoes.ComandoExcluiEspaco;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import projeto.academia.acoes.ComandoEditarEspaco;
+import projeto.academia.acoes.ComandoExibirAula;
+import projeto.academia.modelos.Aula;
 import projeto.academia.modelos.Espaco;
 
 /**
@@ -44,6 +48,11 @@ public class TelaListarEspacos extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         tableEspacos.setPreferredSize(new java.awt.Dimension(600, 72));
+        tableEspacos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableEspacosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableEspacos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -63,7 +72,7 @@ public class TelaListarEspacos extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
         jLabel1.setText("Listar Espaços de aula");
 
         btnExcluir.setText("Excluir selecionado");
@@ -83,7 +92,7 @@ public class TelaListarEspacos extends javax.swing.JDialog {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
                         .addComponent(btnExcluir)))
                 .addContainerGap())
         );
@@ -108,6 +117,13 @@ public class TelaListarEspacos extends javax.swing.JDialog {
             recarregarTabela();
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void tableEspacosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEspacosMouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+            Espaco espaco = Espaco.getPorId(Integer.parseInt(tableEspacos.getModel().getValueAt(tableEspacos.getSelectedRow(), 0).toString()));
+            new ComandoEditarEspaco(espaco).executarComando();
+        }
+    }//GEN-LAST:event_tableEspacosMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcluir;

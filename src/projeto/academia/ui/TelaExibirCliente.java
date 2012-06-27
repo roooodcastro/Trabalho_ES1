@@ -4,9 +4,9 @@
  */
 package projeto.academia.ui;
 
-import acoes.ComandoEditarCliente;
-import acoes.ComandoExcluiCliente;
-import acoes.ComandoIncluiClienteAula;
+import projeto.academia.acoes.ComandoEditarCliente;
+import projeto.academia.acoes.ComandoExcluiCliente;
+import projeto.academia.acoes.ComandoIncluiClienteAula;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

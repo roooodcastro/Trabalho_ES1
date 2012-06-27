@@ -10,7 +10,7 @@
  */
 package projeto.academia.ui;
 
-import acoes.ComandoExibirCliente;
+import projeto.academia.acoes.ComandoExibirCliente;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.List;

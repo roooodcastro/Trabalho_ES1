@@ -4,7 +4,7 @@
  */
 package projeto.academia.ui;
 
-import acoes.ComandoExibirAula;
+import projeto.academia.acoes.ComandoExibirAula;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.List;

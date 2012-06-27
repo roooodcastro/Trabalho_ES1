@@ -89,6 +89,7 @@ public class Professor extends Pessoa {
         try {
             Arquivo arquivoProfessor = new Arquivo(Arquivo.ARQ_PROFESSOR, Arquivo.MODO_ESCRITA);
             arquivoProfessor.escreverRegistro(gerarRegistroArquivo());
+            recarregarProfessores();
             return true;
         } catch (Exception ex) {
             return false;
@@ -117,6 +118,12 @@ public class Professor extends Pessoa {
     public static boolean excluir(Professor prof) {
         recarregarProfessores();
         try {
+            List<Aula> aulas = Aula.getAulas();
+            for (Aula aula : aulas) {
+                if (aula.getProfessor().getCpf().equals(prof.getCpf())) {
+                    Aula.excluir(aula);
+                }
+            }
             Arquivo arquivoProfessor = new Arquivo(Arquivo.ARQ_PROFESSOR, Arquivo.MODO_ESCRITA);
             arquivoProfessor.limpar();
             for (Professor professor : professores) {

@@ -21,7 +21,7 @@ public class TelaNovaAula extends javax.swing.JDialog {
     private List<Horario> horarios;
     private List<Professor> professores;
     private List<Espaco> espacos;
-    private DefaultListModel<String> listHorariosModel;
+    private DefaultListModel listHorariosModel;
 
     /** Creates new form TelaNovaAula */
     public TelaNovaAula(java.awt.Frame parent, boolean modal) {
@@ -29,7 +29,7 @@ public class TelaNovaAula extends javax.swing.JDialog {
         initComponents();
         InterfaceUtils.centralizarFrame(this);
         horarios = new ArrayList<Horario>();
-        listHorariosModel = new DefaultListModel<String>();
+        listHorariosModel = new DefaultListModel();
         listHorarios.setModel(listHorariosModel);
         espacos = Espaco.getEspacos();
         professores = Professor.getProfessores();
@@ -37,9 +37,12 @@ public class TelaNovaAula extends javax.swing.JDialog {
             InterfaceUtils.exibeAlerta(this, "Erro", "Para cadastrar uma aula é necessário que existam espaços cadastrados no sistema");
             dispose();
         }
-        if (professores.isEmpty()) {
+        else if (professores.isEmpty()) {
             InterfaceUtils.exibeAlerta(this, "Erro", "Para cadastrar uma aula é necessário que existam professores cadastrados no sistema");
             dispose();
+        }
+        else {
+            setVisible(true);
         }
         for (Espaco espaco : espacos) {
             comboEspacos.addItem(espaco.getNome());
@@ -160,7 +163,7 @@ public class TelaNovaAula extends javax.swing.JDialog {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel18))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtHoraFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)))
@@ -246,7 +249,7 @@ public class TelaNovaAula extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel16.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
         jLabel16.setText("Cadastrar nova aula");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -276,11 +279,12 @@ public class TelaNovaAula extends javax.swing.JDialog {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         if (txtNome.getText().isEmpty() || listHorariosModel.isEmpty()) {
             InterfaceUtils.exibeAlerta(this, "Erro ao cadastrar Aula", "Um ou mais campos obrigatórios estão em branco. Por favor preencha-os e tente novamente.");
-        } else {
+        }
+        else {
             try {
                 List<Horario> horariosSelecionados = new ArrayList<Horario>();
                 for (int i = 0; i < listHorariosModel.getSize(); i++) {
-                    horariosSelecionados.add(Horario.getFromString(listHorariosModel.get(i)));
+                    horariosSelecionados.add(Horario.getFromString(listHorariosModel.get(i).toString()));
                 }
                 Aula.cadastrarAula(txtNome.getText(), professores.get(comboProfessor.getSelectedIndex()), horariosSelecionados, espacos.get(comboEspacos.getSelectedIndex()));
                 InterfaceUtils.exibeMensagem(this, "Cadastro realizado", "Aula cadastrada com sucesso!");
@@ -335,7 +339,7 @@ public class TelaNovaAula extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void limparCampos() {
-        listHorariosModel = new DefaultListModel<String>();
+        listHorariosModel = new DefaultListModel();
         txtNome.setText("");
         comboDiaSemana.setSelectedIndex(0);
         comboEspacos.setSelectedIndex(0);

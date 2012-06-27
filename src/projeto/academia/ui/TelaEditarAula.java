@@ -22,7 +22,7 @@ public class TelaEditarAula extends javax.swing.JDialog {
     private List<Horario> horarios;
     private List<Professor> professores;
     private List<Espaco> espacos;
-    private DefaultListModel<String> listHorariosModel;
+    private DefaultListModel listHorariosModel;
     
     /** Creates new form TelaEditarAula */
     public TelaEditarAula(java.awt.Frame parent, boolean modal, Aula aula) {
@@ -31,7 +31,7 @@ public class TelaEditarAula extends javax.swing.JDialog {
         initComponents();
         InterfaceUtils.centralizarFrame(this);
         horarios = new ArrayList<Horario>();
-        listHorariosModel = new DefaultListModel<String>();
+        listHorariosModel = new DefaultListModel();
         for (Horario horario : aula.getHorarios()) {
             listHorariosModel.addElement(horario.toString());
             horarios.add(horario);
@@ -81,7 +81,7 @@ public class TelaEditarAula extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel16.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
         jLabel16.setText("Editar Aula");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -162,7 +162,7 @@ public class TelaEditarAula extends javax.swing.JDialog {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel18))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtHoraFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)))
@@ -279,7 +279,7 @@ public class TelaEditarAula extends javax.swing.JDialog {
             try {
                 List<Horario> horariosSelecionados = new ArrayList<Horario>();
                 for (int i = 0; i < listHorariosModel.getSize(); i++) {
-                    horariosSelecionados.add(Horario.getFromString(listHorariosModel.get(i)));
+                    horariosSelecionados.add(Horario.getFromString(listHorariosModel.get(i).toString()));
                 }
                 aula.setHorarios(horarios);
                 aula.setNome(txtNome.getText());

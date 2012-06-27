@@ -119,6 +119,10 @@ public class Aula extends ModeloAbstrato {
     public void addAluno(Cliente aluno) {
         this.alunos.add(aluno);
     }
+
+    public void removeAluno(Cliente aluno) {
+        this.alunos.remove(aluno);
+    }
     
     public boolean isAlunoMatriculado(Cliente cliente) {
         for (Cliente aluno : alunos) {

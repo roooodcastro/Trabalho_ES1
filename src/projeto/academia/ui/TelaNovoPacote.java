@@ -15,7 +15,7 @@ import projeto.academia.modelos.Aula;
  */
 public class TelaNovoPacote extends javax.swing.JDialog {
 
-    private DefaultListModel<String> listModel;
+    private DefaultListModel listModel;
     private List<Aula> aulas;
     private List<Aula> aulasSelecionadas;
 
@@ -23,7 +23,7 @@ public class TelaNovoPacote extends javax.swing.JDialog {
     public TelaNovoPacote(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listModel = new DefaultListModel<String>();
+        listModel = new DefaultListModel();
         listAulas.setModel(listModel);
         aulasSelecionadas = new ArrayList<Aula>();
         aulas = Aula.getAulas();

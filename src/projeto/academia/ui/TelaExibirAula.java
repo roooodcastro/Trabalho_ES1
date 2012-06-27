@@ -4,9 +4,9 @@
  */
 package projeto.academia.ui;
 
-import acoes.ComandoEditarAula;
-import acoes.ComandoExcluiAula;
-import acoes.ComandoIncluiClienteAula;
+import projeto.academia.acoes.ComandoEditarAula;
+import projeto.academia.acoes.ComandoExcluiAula;
+import projeto.academia.acoes.ComandoIncluiClienteAula;
 import java.awt.Dimension;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
@@ -38,7 +38,7 @@ public class TelaExibirAula extends javax.swing.JDialog {
         btnIncluirCliente.setText("Incluir Cliente");
         btnAlterar.setText("Editar");
         btnExcluir.setText("Excluir");
-        DefaultListModel<String> listModel = new DefaultListModel<String>();
+        DefaultListModel listModel = new DefaultListModel();
         for (Horario horario : aula.getHorarios()) {
             listModel.addElement(horario.toString());
         }

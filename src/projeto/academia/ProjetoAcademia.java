@@ -23,8 +23,8 @@ public class ProjetoAcademia {
 
             @Override
             public void run() {
-                TelaPrincipal.getInstance().setVisible(true);
-//                new TelaLogin(null, true).setVisible(true);
+//                TelaPrincipal.getInstance().setVisible(true);
+                new TelaLogin(null, true).setVisible(true);
             }
         });
     }

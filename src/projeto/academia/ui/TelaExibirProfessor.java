@@ -4,8 +4,8 @@
  */
 package projeto.academia.ui;
 
-import acoes.ComandoEditarProfessor;
-import acoes.ComandoExcluiProfessor;
+import projeto.academia.acoes.ComandoEditarProfessor;
+import projeto.academia.acoes.ComandoExcluiProfessor;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import projeto.academia.modelos.Aula;
